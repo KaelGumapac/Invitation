@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400..700&family=Alex+Brush&family=Caveat:wght@400..700&family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.4/dist/confetti.browser.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -91,7 +92,7 @@
     }
     .hero-headline {
       font-family: var(--font-display);
-      font-size: clamp(42px, 8vw, 64px);
+      font-size: clamp(52px, 12vw, 96px);
       font-weight: 600;
       line-height: 1.15;
       letter-spacing: -0.01em;
@@ -229,16 +230,6 @@
       margin: 0 auto 20px;
       border: 1px solid var(--border);
     }
-    .dress-no-white {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 20px;
-      padding: 8px 20px;
-      border: 1px solid rgba(255,255,255,0.2);
-      font-size: 13px;
-      letter-spacing: 0.05em;
-    }
     .dress-footer {
       font-size: clamp(18px, 3vw, 26px);
       font-weight: 700;
@@ -247,6 +238,18 @@
     }
 
     /* ─── Section 5 — Reminders ─── */
+    #reminders .label {
+      font-size: 14px;
+      letter-spacing: 0.2em;
+      margin-bottom: 20px;
+    }
+    #reminders h2 {
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 32px;
+      line-height: 1.15;
+    }
     .reminder-chips {
       display: flex;
       flex-wrap: wrap;
@@ -276,6 +279,29 @@
       font-size: 14px;
       color: var(--muted);
       line-height: 1.7;
+    }
+    .hashtag-wrap {
+      text-align: center;
+      margin-top: 16px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+    .hashtag-wrap small {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-family: var(--font-mono);
+      margin-bottom: 8px;
+    }
+    .hashtag {
+      font-family: var(--font-script);
+      font-size: 28px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: var(--accent);
+      display: block;
     }
     .car-text {
       margin-top: 48px;
@@ -421,6 +447,87 @@
       overflow: hidden;
     }
     .rsvp-confirm:hover { background: var(--accent); }
+    .rsvp-confirm:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      background: var(--muted);
+    }
+
+    /* ─── RSVP Response Toast ─── */
+    .rsvp-toast {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 2000;
+      padding: 48px 32px 28px;
+      text-align: center;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 12px 48px rgba(0,0,0,0.06);
+      transform: translateY(-100%);
+      opacity: 0;
+      transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.5s ease;
+    }
+    .rsvp-toast.open {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    .rsvp-toast .toast-icon {
+      display: block;
+      width: 56px;
+      height: 56px;
+      margin: 0 auto 12px;
+      border-radius: 50%;
+      border: 1.5px solid var(--accent);
+      background: var(--surface);
+      line-height: 56px;
+      font-size: 22px;
+      animation: toastIconIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s both;
+    }
+    @keyframes toastIconIn {
+      0% { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .rsvp-toast .toast-accent {
+      width: 32px;
+      height: 1.5px;
+      background: var(--accent);
+      margin: 0 auto 16px;
+      animation: toastSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+    }
+    .rsvp-toast .toast-title {
+      font-family: var(--font-display);
+      font-size: clamp(20px, 3.5vw, 28px);
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      margin-bottom: 6px;
+      animation: toastSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
+    }
+    @keyframes toastSlideUp {
+      0% { transform: translateY(16px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+    .rsvp-toast .toast-sub {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--muted);
+      max-width: 360px;
+      margin: 0 auto;
+      animation: toastSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
+    }
+    .rsvp-toast .toast-close {
+      position: absolute;
+      top: 12px; right: 16px;
+      background: none;
+      border: none;
+      font-size: 15px;
+      cursor: pointer;
+      color: var(--muted);
+      font-family: var(--font-body);
+      opacity: 0.5;
+      transition: opacity 0.2s;
+      letter-spacing: 0.05em;
+    }
+    .rsvp-toast .toast-close:hover { opacity: 1; }
 
     /* ─── Responsive ─── */
     @media (max-width: 640px) {
@@ -473,7 +580,28 @@
     </div>
   </section>
 
-  <!-- ═══ Section 3 — Timeline ═══ -->
+  <!-- ═══ Section 3 — Dress Code ═══ -->
+  <section id="dresscode">
+    <div class="container reveal">
+      <div class="dress-hero">
+        <span class="label">Dress Code</span>
+        <img src="mq0pprdd-dresscode.png" alt="" class="dress-img">
+        <h2>All-Black Formal</h2>
+        <p>We are honored to have you join us for an evening of
+celebration and elegance.
+<br><br>
+To complement the refined atmosphere, we kindly request a
+Formal or semi-formal all-black dress code. embodying
+timeless sophistication.
+<br><br>
+To maintain the theme, we respectfully ask that white
+outfits be avoided. as this color is reserved for the bride.</p>
+      </div>
+      <p class="dress-footer">EAT, SING, DANCE and have FUN with us!</p>
+    </div>
+  </section>
+
+  <!-- ═══ Section 4 — Timeline ═══ -->
   <section id="timeline-section">
     <div class="container reveal">
       <span class="label">The Wedding Timeline</span>
@@ -529,26 +657,11 @@
     </div>
   </section>
 
-  <!-- ═══ Section 4 — Dress Code ═══ -->
-  <section id="dresscode">
-    <div class="container reveal">
-      <div class="dress-hero">
-        <span class="label">Dress Code</span>
-        <img src="mq0pprdd-dresscode.png" alt="" class="dress-img">
-        <h2>All-Black Formal</h2>
-        <p>We are honored to have you join us for an evening of celebration and elegance. To complement the refined atmosphere, we kindly request a formal or semi-formal all-black dress code, embodying timeless sophistication.</p>
-        <div class="dress-no-white">
-          <span style="font-size:18px;">&#10007;</span> We respectfully ask that white outfits be avoided &mdash; this color is reserved for the bride.
-        </div>
-      </div>
-      <p class="dress-footer">EAT, SING, DANCE and have FUN with us!</p>
-    </div>
-  </section>
-
   <!-- ═══ Section 5 — Reminders ═══ -->
   <section id="reminders">
     <div class="container reveal">
       <span class="label">Reminders</span>
+      <h2>Things to Know</h2>
 
       <div class="reminder-chips">
         <span class="reminder-chip"><strong>By invitation only.</strong> No kids &amp; no plus one.</span>
@@ -568,6 +681,15 @@
         <p>Your presence is the greatest gift to us. However, if you wish to bless us with a gift, a monetary contribution or gift card would be sincerely appreciated as we begin our new journey together.</p>
       </div>
 
+      <div class="callout-card">
+        <h3>Snap & Share</h3>
+        <p>Help us capture our special day and share it by tagging us with our wedding hashtag.</p>
+        <div class="hashtag-wrap">
+          <small>Follow us</small>
+          <span class="hashtag">#GumaPacked</span>
+        </div>
+      </div>
+
       <div class="car-text">
         <img src="mq132ane-getaway.png" alt="" class="img-fluid">
       </div>
@@ -579,6 +701,15 @@
 
   <!-- ═══ RSVP Overlay ═══ -->
   <div class="rsvp-overlay" id="rsvpOverlay" onclick="closeRSVP()"></div>
+
+  <!-- ═══ RSVP Response Toast ═══ -->
+  <div class="rsvp-toast" id="rsvpToast">
+    <button class="toast-close" onclick="closeToast()">close</button>
+    <span class="toast-icon" id="toastIcon">♡</span>
+    <div class="toast-accent"></div>
+    <div class="toast-title" id="toastTitle">See you there!</div>
+    <div class="toast-sub" id="toastSub">We're thrilled you confirmed.</div>
+  </div>
 
   <!-- ═══ RSVP Bottom Drawer ═══ -->
   <footer class="rsvp-sheet" id="rsvpSheet">
@@ -644,21 +775,86 @@
       document.getElementById('btnConfirm').classList.remove('hidden');
     };
 
-    window.submitRSVP = function() {
+    window.submitRSVP = async function() {
       const name = document.getElementById('guestName').value.trim();
       if (!name) { alert('Please enter your full name.'); return; }
       if (attending === null) { alert('Please select whether you will attend.'); return; }
 
-      const msg = attending
-        ? 'Thank you! We look forward to celebrating with you, ' + name + '.'
-        : 'Thank you, ' + name + '. We understand and appreciate your response.';
+      const isAttending = attending;
+      const btnConfirm = document.getElementById('btnConfirm');
+      const originalText = btnConfirm.textContent;
 
-      document.getElementById('guestName').value = '';
-      attending = null;
-      document.getElementById('btnYes').classList.remove('active');
-      document.getElementById('btnNo').classList.remove('active');
-      document.getElementById('btnConfirm').classList.add('hidden');
-      closeRSVP();
+      // Disable button to prevent double-clicks
+      btnConfirm.disabled = true;
+      btnConfirm.textContent = 'Saving...';
+
+      try {
+        const response = await fetch('/api/rsvp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            guest_name: name,
+            attendance_status: isAttending ? 'attending' : 'declined'
+          })
+        });
+
+        if (!response.ok) {
+          const err = await response.json().catch(() => ({}));
+          throw new Error(err.error || 'Server error');
+        }
+
+        // Success — reset form
+        document.getElementById('guestName').value = '';
+        attending = null;
+        document.getElementById('btnYes').classList.remove('active');
+        document.getElementById('btnNo').classList.remove('active');
+        document.getElementById('btnConfirm').classList.add('hidden');
+
+        // Close the drawer
+        closeRSVP();
+
+        // Show toast
+        if (isAttending) {
+          document.getElementById('toastIcon').textContent = '♡';
+          document.getElementById('toastTitle').textContent = 'See you there!';
+          document.getElementById('toastSub').textContent = 'Dear ' + name + ', we\'re overjoyed that you\'ll join us on our special day. ♡';
+          document.getElementById('rsvpToast').classList.add('open');
+
+          // Single party-popper burst from center
+          setTimeout(function() {
+            try {
+              if (typeof window.confetti === 'function') {
+                confetti({
+                  particleCount: 150,
+                  spread: 80,
+                  origin: { x: 0.5, y: 0.5 },
+                  ticks: 200,
+                  gravity: 1.2,
+                  scalar: 1.2,
+                  colors: ['#c9a84c', '#d4af37', '#f5a623', '#e8d5b0', '#f5f0e1', '#ffb6c1', '#f8d7da']
+                });
+              }
+            } catch(e) {
+              console.warn('confetti error:', e);
+            }
+          }, 100);
+
+        } else {
+          document.getElementById('toastIcon').textContent = '🕊';
+          document.getElementById('toastTitle').textContent = 'With heartfelt understanding';
+          document.getElementById('toastSub').textContent = 'Dear ' + name + ', we completely understand. You\'ll be in our hearts as we celebrate our union.';
+          document.getElementById('rsvpToast').classList.add('open');
+        }
+
+      } catch (err) {
+        alert('Something went wrong: ' + err.message + '\n\nPlease try again.');
+        btnConfirm.disabled = false;
+        btnConfirm.textContent = originalText;
+      }
+    };
+
+    window.closeToast = function() {
+      document.getElementById('rsvpToast').classList.remove('open');
     };
 
     window.addEventListener('scroll', () => {
