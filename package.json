@@ -1,0 +1,13 @@
+{
+  "name": "kael-lei-wedding",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Wedding RSVP site for Kael & Lei",
+  "scripts": {
+    "dev": "echo 'Open kael-lei-wedding.html in your browser'",
+    "start": "node api/rsvp.js"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^0.9.0"
+  }
+}

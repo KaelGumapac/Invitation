@@ -5,21 +5,28 @@
   "sourceFiles": {
     "all": [
       "1.png",
+      "api/rsvp.js",
       "kael-lei-wedding.html",
       "mq0pprdd-dresscode.png",
       "mq132ane-getaway.png",
-      "mq2bwsbj-gusto.png"
+      "mq2bwsbj-gusto.png",
+      "mq2d3jxp-image.png",
+      "package.json"
     ],
     "html": [
       "kael-lei-wedding.html"
     ],
     "css": [],
-    "scriptsAndComponents": [],
+    "scriptsAndComponents": [
+      "api/rsvp.js"
+    ],
     "assets": [
       "1.png",
       "mq0pprdd-dresscode.png",
       "mq132ane-getaway.png",
-      "mq2bwsbj-gusto.png"
+      "mq2bwsbj-gusto.png",
+      "mq2d3jxp-image.png",
+      "package.json"
     ]
   },
   "screens": [
@@ -79,7 +86,7 @@
   },
   "interactions": {
     "source": [
-      "kael-lei-wedding.html"
+      "api/rsvp.js"
     ],
     "requiredStates": [
       "default",

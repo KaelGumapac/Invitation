@@ -13,8 +13,8 @@ This archive is the source of truth for turning the design into production code.
 - Primary entry: `kael-lei-wedding.html`
 - HTML screens detected: 1
 - Stylesheets detected: 0
-- Script/component files detected: 0
-- Supporting assets detected: 4
+- Script/component files detected: 1
+- Supporting assets detected: 6
 
 ## Responsive contract
 Validate the implementation across this 2025–2026 viewport matrix:
@@ -69,13 +69,15 @@ For responsive web exports, treat these as a modern breakpoint system for one ad
 - None detected
 
 ## Scripts/components
-- None detected
+- `api/rsvp.js`
 
 ## Assets and supporting files
 - `1.png`
 - `mq0pprdd-dresscode.png`
 - `mq132ane-getaway.png`
 - `mq2bwsbj-gusto.png`
+- `mq2d3jxp-image.png`
+- `package.json`
 
 ## Coding checklist for AI tools
 1. Inspect `kael-lei-wedding.html` and `DESIGN-MANIFEST.json` first and identify reusable components before coding.
